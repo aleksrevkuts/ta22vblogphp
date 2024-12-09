@@ -30,6 +30,9 @@
                     @endif
                 </form>
                 <a href="{{ route('post', ['post' => $post]) }}" class="btn btn-primary">Read more</a>
+                <a href="{{ route('comments.create', $post) }}" class="btn btn-primary">Add Comment</a>
+                <a href="{{ route('tags.create') }}" class="btn btn-primary">Add tag</a>
+
             </div>
         @endif
     </div>

@@ -3,11 +3,15 @@
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PublicController::class, 'index'])->name('home');
 Route::get('/post/{post}', [PublicController::class, 'post'])->name('post');
 Route::get('/tag/{tag}', [PublicController::class, 'tag'])->name('tag');
+Route::get('/comment/{comment}', [PublicController::class, 'comment'])->name('comment');
 
 // Route::get('/admin/posts', [PostController::class, 'index'])->name('posts.index');
 // Route::get('/admin/posts/create', [PostController::class, 'create'])->name('posts.create');
@@ -25,6 +29,10 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::resource('/admin/posts', PostController::class);
+    Route::resource('/admin/comments', CommentController::class);
+    Route::resource('/admin/users', UserController::class);
+    Route::resource('/admin/tags', TagController::class);
+
 
     Route::post('/post/{post}/like', [PublicController::class, 'like'])->name('like');
 
