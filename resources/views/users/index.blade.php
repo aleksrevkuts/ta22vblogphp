@@ -29,9 +29,8 @@
                         <td>{{ $user->updated_at->format('Y-m-d H:i') }}</td>
                         <td>
                             <div class="join">
-
-                                <a href="#" class="btn join-item btn-info">View</a>
-                                <a href="#" class="btn join-item btn-warning">Edit</a>
+                                <a href="{{ route('users.show', $user) }}" class="btn join-item btn-info">View</a>
+                                <a href="{{ route('users.edit', $user) }}" class="btn join-item btn-warning">Edit</a>
                                 <form action="#" method="POST" class="inline">
                                     @csrf
                                     @method('DELETE')
