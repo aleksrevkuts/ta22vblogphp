@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
 
 
     Route::post('/post/{post}/like', [PublicController::class, 'like'])->name('like');
+    Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
+    Route::get('/tags/create', [TagController::class, 'create'])->name('tags.create');
+    Route::post('/tags', [TagController::class, 'store'])->name('tags.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

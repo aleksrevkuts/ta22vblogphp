@@ -24,9 +24,10 @@ class TagController extends Controller
      */
     public function create()
 {
-    $tags = Tag::all();
-    return view('posts.create', compact('tags'));
+    $posts = Post::all();
+    return view('tags.create', compact('posts'));
 }
+
 
 
     /**
@@ -35,25 +36,19 @@ class TagController extends Controller
     public function store(Request $request)
 {
     $validated = $request->validate([
-        'title' => 'required|string|max:255',
-        'body' => 'required|string',
-        'tags' => 'array', // Массив тегов
-        'tags.*' => 'exists:tags,id', // Проверка существования каждого выбранного тега в таблице tags
+        'name' => 'required|string|max:255|unique:tags',
+        'posts' => 'array',
+        'posts.*' => 'exists:posts,id',
     ]);
 
-    // Создание поста
-    $post = Post::create([
-        'title' => $validated['title'],
-        'body' => $validated['body'],
-    ]);
+    $tag = Tag::create(['name' => $validated['name']]);
 
-    // Привязка тегов к посту
-    $post->tags()->sync($validated['tags']); // sync будет обновлять связи с тегами
+    if (!empty($validated['posts'])) {
+        $tag->posts()->attach($validated['posts']);
+    }
 
-    return redirect()->route('posts.index')->with('success', 'Post created successfully!');
+    return redirect()->route('tags.index')->with('success', 'Tag created and attached to posts successfully.');
 }
-
-
 
     /**
      * Display the specified resource.
